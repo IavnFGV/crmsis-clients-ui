@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Login from "@/views/Login.vue";
 import PipedriveSetup from "@/views/PipedriveSetup.vue";
 import Definitions from "@/views/Definitions.vue";
+import ManagerSchedule from '@/views/ManagerSchedule.vue';
 import { useAuthStore } from '@/stores/auth';
 
 const router = createRouter({
@@ -19,13 +20,18 @@ const router = createRouter({
                 {
                     path: 'definitions',
                     component: Definitions
+                },
+                {
+                    path: '/manager-schedule',
+                    name: 'ManagerSchedule',
+                    component: ManagerSchedule
                 }
             ],
-            beforeEnter: (to, from, next) => {
-                const authStore = useAuthStore();
-                if (!authStore.isAuthenticated) next('/login');
-                else next();
-            }
+            // beforeEnter: (to, from, next) => {
+            //     // const authStore = useAuthStore();
+            //     // if (!authStore.isAuthenticated) next('/login');
+            //     // else next();
+            // }
         },
         {
             path: '/login',
@@ -36,6 +42,7 @@ const router = createRouter({
             name: 'notfound',
             component: () => import('@/views/pages/NotFound.vue')
         },
+
 
     ]
 });
