@@ -5,6 +5,7 @@ import PipedriveSetup from "@/views/PipedriveSetup.vue";
 import Definitions from "@/views/Definitions.vue";
 import ManagerSchedule from '@/views/ManagerSchedule.vue';
 import { useAuthStore } from '@/stores/auth';
+import TaskAssignment from "@/views/TaskAssignment.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -25,6 +26,11 @@ const router = createRouter({
                     path: '/manager-schedule',
                     name: 'ManagerSchedule',
                     component: ManagerSchedule
+                },
+                {
+                    path: '/task-assignment',
+                    name: 'TaskAssignment',
+                    component: TaskAssignment
                 }
             ],
             // beforeEnter: (to, from, next) => {

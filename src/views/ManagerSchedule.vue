@@ -1,5 +1,6 @@
 <script setup>
 import {ref, computed, onMounted} from "vue";
+import { useToast } from "primevue/usetoast";
 import axios from "axios";
 
 const API_BASE = "/api/v1/workweek";
@@ -9,6 +10,8 @@ const allUsers = ref([]);
 const originalMap = new Map(); // managerId → configJson
 
 const filter = ref("");
+
+const toast = useToast();
 
 const filteredManagers = computed(() =>
     managers.value.filter((m) =>
@@ -67,13 +70,23 @@ async function submit() {
     try {
         for (const item of changed) {
             await axios.post(API_BASE, item);
-            originalMap.set(item.managerId, item.configJson); // обновляем сохранённую версию
+            originalMap.set(item.managerId, item.configJson);
         }
 
-        alert(`Сохранено ${changed.length} изменений`);
+        toast.add({
+            severity: "success",
+            summary: "Успешно",
+            detail: `Сохранено ${changed.length} изменений`,
+            life: 3000
+        });
     } catch (e) {
         console.error("Ошибка при сохранении:", e);
-        alert("Ошибка при сохранении");
+        toast.add({
+            severity: "error",
+            summary: "Ошибка",
+            detail: "Ошибка при сохранении",
+            life: 5000
+        });
     }
 }
 
@@ -99,8 +112,13 @@ async function loadAll() {
             return m;
         });
     } catch (e) {
-        console.error("Ошибка при загрузке workweek:", e);
-        alert("Ошибка при загрузке данных");
+        console.error("Error on workweek load:", e);
+        toast.add({
+            severity: "error",
+            summary: "Error",
+            detail: "Error on workweek load",
+            life: 5000
+        });
     }
 }
 
@@ -109,8 +127,13 @@ async function loadUsers() {
         const res = await axios.get(API_BASE + '/users');
         allUsers.value = res.data;
     } catch (e) {
-        console.error("Ошибка при загрузке пользователей:", e);
-        alert("Ошибка при загрузке пользователей");
+        console.error("Error on users load:", e);
+        toast.add({
+            severity: "error",
+            summary: "Error",
+            detail: "Error on users load",
+            life: 5000
+        });
     }
 }
 

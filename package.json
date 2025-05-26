@@ -9,6 +9,7 @@
     },
     "dependencies": {
         "@primevue/themes": "^4.2.4",
+        "ajv": "^8.17.1",
         "axios": "^1.7.9",
         "chart.js": "3.3.2",
         "pinia": "^2.3.1",
